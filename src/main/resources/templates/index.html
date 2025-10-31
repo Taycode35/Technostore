@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      th:replace="layout :: layout(~{::body})">
+<body>
+<div th:fragment="body">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="text-primary fw-bold">Liste des produits</h1>
+    <a href="/product/new" class="btn btn-primary">+ Ajouter un produit</a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-primary">
+      <tr>
+        <th>#</th>
+        <th>Type</th>
+        <th>Marque</th>
+        <th>Modèle</th>
+        <th>Prix (€)</th>
+        <th>Année</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="product, status : ${products}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${product.productType}"></td>
+        <td th:text="${product.brand}"></td>
+        <td th:text="${product.model}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.year}"></td>
+        <td>
+          <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-sm btn-outline-primary">Modifier</a>
+          <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-sm btn-outline-danger">Supprimer</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

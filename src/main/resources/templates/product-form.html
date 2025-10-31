@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      th:replace="layout :: layout(~{::body})">
+<body>
+  <h1 class="mb-4 text-primary fw-bold">Créer un produit</h1>
+  <form th:action="@{/product}" th:object="${product}" method="post" class="needs-validation">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="productType" class="form-label">Type</label>
+        <select id="productType" th:field="*{productType}" class="form-select">
+          <option value="">-- Sélectionner --</option>
+          <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+        </select>
+        <div th:if="${#fields.hasErrors('productType')}" th:errors="*{productType}" class="text-danger small"></div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="brand" class="form-label">Marque</label>
+        <input type="text" id="brand" th:field="*{brand}" class="form-control">
+        <div th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="text-danger small"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="model" class="form-label">Modèle</label>
+        <input type="text" id="model" th:field="*{model}" class="form-control">
+        <div th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="text-danger small"></div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="year" class="form-label">Année</label>
+        <input type="number" id="year" th:field="*{year}" class="form-control">
+        <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="text-danger small"></div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="price" class="form-label">Prix (€)</label>
+        <input type="number" step="0.01" id="price" th:field="*{price}" class="form-control">
+        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger small"></div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <a href="/" class="btn btn-secondary me-2">Annuler</a>
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+  </form>
+</body>
+</html>

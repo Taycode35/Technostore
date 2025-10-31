@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+#### Pour la nav bar
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techno Store</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">
+            <img src="#" width="30" height="30" class="d-inline-block align-top" alt="">
+            Techno Store
+        </a>
+        <a href="/logout" class="btn btn-danger float-right">Logout</a>
+    </nav>
+    <h1>Products</h1>
+    <a href="/product/new" class="btn btn-primary">Add New Product</a>
+##########
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Year</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, status : ${products}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${product.productType}"></td>
+            <td th:text="${product.brand}"></td>
+            <td th:text="${product.model}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.year}"></td>
+            <td>
+                <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
