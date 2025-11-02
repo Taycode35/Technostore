@@ -1,7 +1,7 @@
 package com.eni.technostore.repository;
 
-import com.eni.technostore.model.Product;
-import com.eni.technostore.model.ProductType;
+import com.eni.technostore.entity.Product;
+import com.eni.technostore.entity.ProductType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -49,3 +49,9 @@ application-dev.yml
 # .mvn/wrapper/maven-wrapper.jar
 mvnw
 mvnw.cmd
+
+# Secrets
+.env
+.env.local
+*.env
+!.env.example

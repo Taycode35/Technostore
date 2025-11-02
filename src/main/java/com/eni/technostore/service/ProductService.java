@@ -1,7 +1,7 @@
 package com.eni.technostore.service;
 
-import com.eni.technostore.model.Product;
-import com.eni.technostore.model.ProductType;
+import com.eni.technostore.entity.Product;
+import com.eni.technostore.entity.ProductType;
 
 import java.util.List;
 import java.util.Optional;

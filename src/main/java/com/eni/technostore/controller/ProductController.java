@@ -1,7 +1,7 @@
 package com.eni.technostore.controller;
 
-import com.eni.technostore.model.Product;
-import com.eni.technostore.model.ProductType;
+import com.eni.technostore.entity.Product;
+import com.eni.technostore.entity.ProductType;
 import com.eni.technostore.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,41 +1,44 @@
 version: '3.8'
 
 volumes:
-  mysql-data:
+  postgres-data:
+
 networks:
-  spring-boot-mysql-network:
-    name: spring-boot-mysql-network
+  spring-boot-postgres-network:
+    name: spring-boot-postgres-network
+
 services:
-  mysqldb:
-    image: mysql:lts
-    command: --mysql-native-password=ON
-    ports:
-      - "3308:3306"
+  postgresdb:
+    image: postgres:16-alpine
     environment:
-      - MYSQL_DATABASE=techstore
-      - MYSQL_USER=techstore_user
-      - MYSQL_PASSWORD=4/OobApyR7HLWGWR/2xzGVAzYnqoLzFbCxT/kNVVDXs=
-      - MYSQL_ROOT_PASSWORD=wxxQizIsNjvotettRgDCF9bsRRaucM2OUq6+z/J3cIY=
-    networks:
-      - spring-boot-mysql-network
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - spring-boot-postgres-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "pg_isready || exit 1"]
+      interval: 10s
+      timeout: 5s
       retries: 5
-      interval: 3s
-      timeout: 30s
-  techstore:
+      start_period: 10s
+
+  technostore:
     build: .
     ports:
       - "8080:8080"
     depends_on:
-      mysqldb:
+      postgresdb:
         condition: service_healthy
+    env_file:
+      - .env
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/techstore
-      - SPRING_DATASOURCE_USERNAME=techstore_user
-      - SPRING_DATASOURCE_PASSWORD=4/OobApyR7HLWGWR/2xzGVAzYnqoLzFbCxT/kNVVDXs=
+      SPRING_PROFILES_ACTIVE: dev
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     networks:
-      - spring-boot-mysql-network
+      - spring-boot-postgres-network
+    restart: unless-stopped

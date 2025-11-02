@@ -1,4 +1,4 @@
-package com.eni.technostore.model;
+package com.eni.technostore.entity;
 
 
 import jakarta.persistence.*;
@@ -10,6 +10,7 @@ import lombok.Data;
 import java.time.Year;
 
 @Entity
+@Table(name = "products")
 @Data
 public class Product {
 
@@ -32,5 +33,6 @@ public class Product {
     private Double price;
 
     @NotNull(message = "Year can not be null")
+    @Column(name = "product_year")
     private Year year;
 }

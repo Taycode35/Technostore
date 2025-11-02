@@ -1,7 +1,7 @@
-FROM openjdk:24-slim-bullseye
+FROM openjdk:21-slim-bookworm
 
 WORKDIR /app
 
-COPY target/*.jar /app/techstore.jar
+COPY target/*.jar /app/technostore.jar
 
-ENTRYPOINT ["java", "-jar", "/app/techstore.jar"]
+ENTRYPOINT ["java", "-jar", "/app/technostore.jar"]
