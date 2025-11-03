@@ -6,12 +6,14 @@ on:
   pull_request:
     branches: [ develop, main ]
 
+
 env:
   JAVA_VERSION: '21'
   JAVA_DISTRIBUTION: 'temurin'
 
 jobs:
   # ========================================
+
   # JOB 1 : Tests & Qualite de code (sur develop)
   # ========================================
   test-and-quality:
