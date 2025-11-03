@@ -177,36 +177,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <!-- OWASP Dependency Check(Vérification automatiquement des vulnérabilités CVE dans les dépendances) -->
-<!--    <profiles>-->
-<!--        <profile>-->
-<!--            <id>security</id>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.owasp</groupId>-->
-<!--                        <artifactId>dependency-check-maven</artifactId>-->
-<!--                        <version>12.1.3</version>-->
-<!--                        <configuration>-->
-<!--                            <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>-->
-<!--                            <failBuildOnCVSS>7</failBuildOnCVSS>-->
-<!--                            <suppressionFiles>-->
-<!--                                <suppressionFile>owasp-suppressions.xml</suppressionFile>-->
-<!--                            </suppressionFiles>-->
-<!--                            <format>HTML</format>-->
-<!--                            <outputDirectory>target/dependency-check-report</outputDirectory>-->
-<!--                        </configuration>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <goals>-->
-<!--                                    <goal>check</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-<!--    </profiles>-->
 </project>
