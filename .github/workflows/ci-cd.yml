@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ develop, main ]
 
+  permissions:
+    contents: read
+    issues: write
+    pull-requests: write
+    checks: write
+
 env:
   JAVA_VERSION: '21'
   JAVA_DISTRIBUTION: 'temurin'
