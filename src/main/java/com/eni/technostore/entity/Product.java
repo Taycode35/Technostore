@@ -35,4 +35,12 @@ public class Product {
     @NotNull(message = "Year can not be null")
     @Column(name = "product_year")
     private Year year;
+
+    public void setProductYear(Year year) {
+        this.year = year;
+    }
+    public Year getProductYear() {
+        return year;
+    }
+
 }
