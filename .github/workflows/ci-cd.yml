@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [ develop, main ]
 
-  permissions:
-    contents: read
-    issues: write
-    pull-requests: write
-    checks: write
 
 env:
   JAVA_VERSION: '21'
@@ -18,10 +13,11 @@ env:
 
 jobs:
   # ========================================
-  # JOB 1 : Tests & Qualité de code (sur develop)
+
+  # JOB 1 : Tests & Qualite de code (sur develop)
   # ========================================
   test-and-quality:
-    name: Tests unitaires & Qualité du code
+    name: Tests unitaires et qualite du code
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
 
@@ -36,40 +32,26 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           cache: maven
 
-      - name: Vérification des dépendances
+      - name: Verification des dependances
         run: mvn dependency:resolve
 
-      - name: Exécution des tests unitaires
+      - name: Execution des tests unitaires
         run: mvn clean test -Dspring.profiles.active=test
 
-      - name: Génération du rapport de couverture
-        run: mvn jacoco:report
-        continue-on-error: true
-
-      - name: Publication des résultats des tests
-        uses: dorny/test-reporter@v1
+      - name: Affichage du resume des tests
         if: always()
-        with:
-          name: Tests JUnit
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
-          fail-on-error: true
+        run: |
+          echo "Resume des tests :"
+          if [ -f target/surefire-reports/TEST-*.xml ]; then
+            echo "Rapports de tests generes"
+            grep -r "tests=" target/surefire-reports/*.xml | head -1 || echo "Analyse en cours..."
+          else
+            echo "Aucun rapport de test trouve"
+          fi
 
-      - name: Analyse de la qualité du code
+      - name: Analyse de la qualite du code
         run: mvn verify
         continue-on-error: true
-
-      - name: Commentaire sur la PR (si échec)
-        if: failure() && github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Les tests unitaires ont échoué. Veuillez corriger les erreurs avant de merger.'
-            })
 
   # ========================================
   # JOB 2 : Protection de la branche main

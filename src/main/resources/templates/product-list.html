@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en"
-      th:replace="layout :: layout(~{::body})">
+      th:replace="~{layout :: layout(~{::body})}">
 <body>
 <div th:fragment="body">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="text-primary fw-bold">Liste des produits</h1>
-    <a href="/product/new" class="btn btn-primary">+ Ajouter un produit</a>
+    <a th:href="@{/products/new}" class="btn btn-primary">+ Ajouter un produit</a>
   </div>
 
   <div class="table-responsive">
@@ -30,8 +30,8 @@
         <td th:text="${product.price}"></td>
         <td th:text="${product.year}"></td>
         <td>
-          <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-sm btn-outline-primary">Modifier</a>
-          <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-sm btn-outline-danger">Supprimer</a>
+          <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-sm btn-outline-primary">Modifier</a>
+          <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn btn-sm btn-outline-danger">Supprimer</a>
         </td>
       </tr>
       </tbody>
