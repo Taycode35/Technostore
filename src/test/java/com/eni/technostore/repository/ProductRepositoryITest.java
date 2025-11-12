@@ -15,41 +15,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @DataJpaTest
-class ProductRepositoryTest {
+@Sql("/test-data/products.sql")
+class ProductRepositoryITest {
 
     @Autowired
     private ProductRepository productRepository;
 
     @Test
-    @Sql("/test-data/products.sql")
-    void shouldFindAllProductsTest(){
+    void testShouldFindAllProducts(){
         List<Product> products = productRepository.findAll();
+
         assertNotNull(products);
         assertEquals(14, products.size());
         assertEquals("Google", products.get(2).getBrand());
     }
 
     @Test
-    @Sql("/test-data/products.sql")
-    void shouldFindAllProductsByTypeTest(){
+    void testShouldFindAllProductsByType(){
         List<Product> products = productRepository.findByProductType(ProductType.TABLET);
+
         assertNotNull(products);
         assertEquals(3, products.size());
         assertEquals("Microsoft", products.getLast().getBrand());
     }
 
     @Test
-    @Sql("/test-data/products.sql")
-    void shouldFindProductByIdTest(){
+    void testShouldFindProductById(){
         Product product = productRepository.findById(3L).orElseThrow(() -> new RuntimeException("Product not found"));
+
         assertEquals("Google", product.getBrand());
         assertEquals("Pixel 8 Pro", product.getModel());
         assertEquals(ProductType.SMARTPHONE, product.getProductType());
     }
 
     @Test
-    @Sql("/test-data/products.sql")
-    void shouldSaveProductTest(){
+    void testShouldSaveProduct(){
         Product product1 = new Product();
         product1.setProductType(ProductType.HEADPHONES);
         product1.setBrand("Bose");
@@ -58,33 +58,35 @@ class ProductRepositoryTest {
         product1.setYear(Year.of(2016));
 
         Product savedProduct = productRepository.save(product1);
+
         assertNotNull(savedProduct);
-        assertNotNull(savedProduct.getId());
         assertEquals(15L, savedProduct.getId().longValue());
         assertNotEquals("JBL", savedProduct.getBrand());
     }
 
     @Test
-    @Sql("/test-data/products.sql")
-    void showUpdateProductTest(){
-        Product product = productRepository.findById(11L).orElseThrow(() -> new RuntimeException("Product not found"));
+    void testShouldUpdateProduct(){
+        Product product = productRepository.findById(11L).orElseThrow(() -> new AssertionError("Product not found"));
         assertEquals("Apple", product.getBrand());
 
         product.setBrand("HUAWEI");
-        Product updatedProduct = productRepository.save(product);
-        assertEquals("HUAWEI", updatedProduct.getBrand());
+        product.setPrice(1000.00);
+        productRepository.save(product);
 
-        updatedProduct.setPrice(1000.00);
-        productRepository.save(updatedProduct);
-        assertEquals(1000.00, updatedProduct.getPrice());
+        assertEquals("HUAWEI", product.getBrand());
+        assertEquals(1000.00, product.getPrice());
     }
 
     @Test
-    @Sql("/test-data/products.sql")
-    void shouldDeleteProductTest(){
-        assertEquals(14, productRepository.count());
+    void testShouldDeleteProduct(){
+        long initialCount = productRepository.count();
+
+        assertEquals(14, initialCount);
+
         productRepository.deleteById(12L);
-        assertEquals(13, productRepository.count());
+
+        assertEquals(initialCount -1, productRepository.count());
+        assertFalse(productRepository.existsById(12L));
     }
 
 }

@@ -79,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public long count() {
+        log.debug("Compte le nombre total de produits");
         return productRepository.count();
     }
 

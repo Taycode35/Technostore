@@ -1,4 +1,4 @@
-FROM openjdk:21-slim-bookworm
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
